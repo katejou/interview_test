@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <style>
+        .green_btn {
+            background-color: lime;
+        }
+
+        .red_btn {
+            background-color: orange;
+        }
+    </style>
+
+    <script>
+
+        function submit() {
+
+
+            // 身份是否QA
+            var iden = document.querySelector('input[name="Iden"]:checked').value;
+            if (iden != "QA") {
+                alert("You have to be QA to create a BUG.");
+                return;
+            }
+
+            // 抓值
+            var sum = document.getElementById('Summary').value;
+            var des = $("#Description").val();
+            if (sum == "" || des == "") {
+                alert("You have to fill in both Summary and Description.");
+                return;
+            }
+                      
+
+            // 加入新行
+            var newRow = "<tr><td><input type='checkbox' onclick='resolve(this)'></td>" +
+                "<td><button onclick='delete_row(this)'>Delete</button></td>" +
+                "<td><input type='text' value='" + sum + "' defaultValue='" + sum + "' onchange='onChangeOfValue(this)'></td>" +
+                "<td><input type='text' value='" + des + "' defaultValue='" + des + "' onchange='onChangeOfValue(this)'></td></tr > ";
+
+            $('#myTable').find('tbody').append(newRow);
+
+        }
+
+        function resolve(ele) {
+
+            // 如果是勾選的話
+            if (ele.checked == true) {
+
+                // 如身份不是RD
+                var iden = document.querySelector('input[name="Iden"]:checked').value;
+                if (iden != "RD") {
+
+                    alert("You have to be RD to resolve a BUG.");
+                    ele.checked = false;
+                    return;
+
+                }
+            }
+            // 解除勾選 (undo Resolve 的權利，題目沒有說。)
+
+        }
+
+        function delete_row(btn) {
+
+            var iden = document.querySelector('input[name="Iden"]:checked').value;
+            if (iden == "QA") {
+                var row = btn.parentNode.parentNode;
+                row.parentNode.removeChild(row);
+            }
+            else
+            {
+                alert('Only QA can Delete Bugs');
+            }
+        }
+
+        function onChangeOfValue(element) {
+
+            var oldValue = element.defaultValue;
+            var newValue = element.value;
+
+            var iden = document.querySelector('input[name="Iden"]:checked').value;
+            // 只有 QA 可以改
+            if (iden == "QA")
+            {
+                element.defaultValue = newValue;
+            }
+            else
+            {
+                alert('Only QA can Edit Bugs');
+                element.value = oldValue;
+            }
+        }
+
+    </script>
+</head>
+<body>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>Ticket System Design and Implementation</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "Task2";
+}
+
+
+@* check box of ID *@
+<h3>Please select your Identity:</h3>
+<input type="radio" id="Iden" name="Iden" value="QA" checked>
+<label for="QA">QA</label>
+<br>
+<input type="radio" id="Iden" name="Iden" value="RD">
+<label for="RD">RD</label>
+<br/>
+<hr />
+@* Adding Bug (if submit check if QA) *@
+<button data-toggle="collapse" data-target="#adding" style="font-size:larger; width:150px;">Add Bug &gt;</button>
+<br/><br/>
+<div id="adding" class="collapse">
+    <label for="Summary">Summary:</label>
+    <br>
+    <input type="text" id="Summary" name="Summary">
+    <br>
+    <label for="Description">Description:</label>
+    <br>
+    <textarea id="Description" cols="40" rows="5"></textarea>
+    <br>
+    <input type="button" value="Submit" onclick="submit()">
+</div>
+<br/>
+<hr />
+@* already have *@
+<button data-toggle="collapse" data-target="#having" style="font-size:larger; width:150px;">Current Bugs :</button>
+<br/><br/>
+<div  id="having" class="collapse">
+    <table border="1" width="400px" id="myTable">
+        @* 欄名 *@
+        <thead>
+            <tr>
+                <th>Resolve</th>
+                <th>Delete</th>
+                <th>Summary</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
